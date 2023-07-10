@@ -1,50 +1,59 @@
-<?php
-// include "config.php";
-
-// if (isset($_GET['updateid'])) {
-//     echo 'aaa';
-//     $id = $_GET['updateid'];
-
-//     $sql = "SELECT * FROM product where category = $id";
-//     var_dump($sql);die;
-//     $result = mysqli_query($conn, $sql);
-
-//     if (mysqli_num_rows($result) > 0) {
-//         while ($row = mysqli_fetch_assoc($result)) {
-//             echo $row['id'];
-//         }
-//     }
-// }
-
-
-
-include "config.php";
-
-$id = $_GET['updateid'];
-$sql = "SELECT * FROM catagories where id = $id";
-$result = mysqli_query($conn,$sql);
-$row = mysqli_fetch_assoc($result);
-
-// $category_name = $row['category_name'];
-// $description = $row['description'];
-// $image = $row['image'];
-
-if (isset($_POST['submit'])) {
-    $category_name = $_POST['category_name'];
-    $description = $_POST['description'];
-    
- 
-    // $sql = "UPDATE `catagories` SET  category_name='$category_name', description='$description' WHERE id='$id'";
- 
-    $result = mysqli_query($conn, $sql);
- 
-    if ($result) {
-        echo "Updated successfully.";
-    //    header('location:display.php');
-    } else {
-       echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+   table {
+      border-collapse: collapse;
+      margin: auto;
+      width: 80%;
+      border: 1px solid lightcoral;
     }
- }
- $conn->close();
- ?>
- 
+    
+    th, td {
+      border: 1px solid lightcoral;
+      padding: 8px;
+      background-color: yellow;
+      text-align: center;
+    }
+    
+    th {
+      background-color: lightcoral;
+      color: white;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    
+    tr:hover {
+      background-color: #ddd;
+    }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+        <th>Product Name</th>
+        <th>Price</th>
+        </tr>
+<?php
+     include "config.php";
+     $id=$_GET['updateid'];
+
+     $query="SELECT * FROM product WHERE category='$id'";
+
+     $result=mysqli_query($conn,$query);
+     if(mysqli_num_rows($result)>0){
+        while($row = mysqli_fetch_assoc($result)){
+            ?>
+
+        <tr><td><?php echo $row['description'] ?></td>
+        <td><?php echo $row['price'] ?></td>
+        </tr>
+<?php
+        }
+     }
+?>
