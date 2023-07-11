@@ -1,5 +1,5 @@
 <?php
-      include "config.php";
+include "config.php";
 
 ?>
 
@@ -18,58 +18,66 @@
   <title>Categories</title>
   <style>
     .my-button {
-        margin: 20px;
+      margin: 20px;
 
     }
   </style>
 </head>
 
 <body>
-<a href="product_details..php"><button type="button" class="btn btn-primary my-button">Add Products</button></a>
+  <a href="product_details..php"><button type="button" class="btn btn-primary my-button">Add Products</button></a>
 
   <table class="table table-hover small-table" style="margin:30px">
     <thead>
       <tr>
-      <th scope="col">Sl no.</th>
-        <th scope="col">Category_id</th>
+        <th scope="col">Sl no.</th>
+        <th scope="col">Category Name</th>
         <th scope="col">Description</th>
         <th scope="col">Price</th>
+        <th scope="col">Operation</th>
       </tr>
     </thead>
     <tbody>
       <?php
 
+      $count = 0;
+      $query ="SELECT * FROM `product` LEFT JOIN catagories on product.category = catagories.id";
 
-      $query = "SELECT * FROM product";
+      // $query = "SELECT * FROM product";
       $result = mysqli_query($conn, $query);
+
       if (mysqli_num_rows($result) > 0) {
         while ($row = $result->fetch_assoc()) {
           // echo $row['category_name'];
 
-          ?>
+      ?>
           <tr>
-          <td><?= $row['id'] ?></td>
-          <td><?= $row['category'] ?></td>
-          <td><?= $row['description'] ?></td>
-          <td><?= $row['price'] ?></td>
+            <td><?=  ++$count ?></td>
+            <td><?= $row['category_name'] ?></td>
+            <td><?= $row['description'] ?></td>
+            <td><?= $row['price'] ?></td>
+            <td>
+              <button class="btn btn-primary"><a href="update_product.php?updateid=<?= $row['id'] ?>" class="text-light">Update</a></button>
+              <button class="btn btn-danger"><a href="delete_product.php?deleteid=<?= $row['id'] ?>" class="text-light">Delete</a></button>
+            </td>
 
-        </tr>
-        <?php
-      
+
+          </tr>
+      <?php
+
         }
-      } 
-      else {
+      } else {
         echo "no data found !!";
       }
 
       ?>
 
-     
+
     </tbody>
   </table>
 
 
- <a href="my_home.php"><button type="button" class="btn btn-secondary my-button">Back to Home Page</button></a>
+  <a href="my_home.php"><button type="button" class="btn btn-secondary my-button">Back to Home Page</button></a>
 
 </body>
 
